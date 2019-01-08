@@ -1,0 +1,29 @@
+<!DOCTYPE html><html>
+<head>
+	<title>String Compare Example</title>
+	<script type="text/javascript">
+
+		var stringValue = "yellow";
+		alert(stringValue.localeCompare("black"));
+		alert(stringValue.localeCompare("yellow"));
+		alert(stringValue.localeCompare("zoo"));
+		     
+		function determineOrder(value){
+			var result = stringValue.localeCompare(value);
+			if(result<0){
+				alert("The string 'yellow' comes before the string '"+value+"'.");
+			}else if(result > 0){
+				alert("The string 'yellow' comes after the string '"+value+"'.");
+			}else {
+				alert("The string 'yellow' is equal to the string '"+value+"'.");
+			}
+		}
+		determineOrder("black");
+		determineOrder("yellow");
+		determineOrder("zoo");
+	</script>
+</head>
+<body>
+	<h1>xxx</h1>
+</body>
+</html>
