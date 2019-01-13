@@ -30,7 +30,8 @@
 	box-sizing:border-box;
 }
 .none{
-	background-color:#F2FAFF；
+	background-color:#F2FAFF;
+	border:1px solid black;
 }
 .current{
 	background-color:pink;
