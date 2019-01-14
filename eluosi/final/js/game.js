@@ -4,26 +4,26 @@ var Game = function(){
 	var nextDiv;
 	//游戏矩阵
 	var gameData = [
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0]
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0]
 	];
 	//当前方块
 	var cur;
@@ -69,7 +69,7 @@ var Game = function(){
 			return false;
 		}else if(pos.y + y < 0){
 			return false;
-		}else if(pos.y + y >= gameData.length){
+		}else if(pos.y + y >= gameData[0].length){
 			return false;
 		}else if(gameData[pos.x + x][pos.y + y] == 1){
 			return false;
@@ -116,6 +116,39 @@ var Game = function(){
 			clearData();
 			cur.down();
 			setDate();
+			refreshDiv(gameData, gameDivs);		
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	//旋转
+	var rotate = function(){
+		if(cur.canRotate(isValid)){
+			clearData();
+			cur.rotate();
+			setDate();
+			refreshDiv(gameData, gameDivs);			
+		}
+	}
+	
+	//左移
+	var left = function(){
+		if(cur.canLeft(isValid)){
+			clearData();
+			cur.left();
+			setDate();
+			refreshDiv(gameData, gameDivs);			
+		}
+	}
+	
+	//右移
+	var right = function(){
+		if(cur.canRight(isValid)){
+			clearData();
+			cur.right();
+			setDate();
 			refreshDiv(gameData, gameDivs);			
 		}
 	}
@@ -127,7 +160,7 @@ var Game = function(){
 		next = new Square();
 		initDiv(gameDiv, gameData, gameDivs);
 		initDiv(nextDiv, next.data, nextDivs);
-		cur.origin.x = 10;
+		cur.origin.x = 8;
 		cur.origin.y = 5;
 		setDate();
 		refreshDiv(gameData, gameDivs);
@@ -136,6 +169,10 @@ var Game = function(){
 	// 导出API
 	this.init = init;
 	this.down = down;
+	this.left = left;
+	this.right = right;
+	this.rotate = rotate;
+	this.fall = function(){while(down());}
 }
 
 
