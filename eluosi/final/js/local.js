@@ -5,6 +5,10 @@ var Local = function(){
 	var INTERVAL = 200;
 	//定时器
 	var timer = null;
+	//时间计数器
+	var timeCount = 0;
+	//时间
+	var time = 0;
 	//绑定键盘事件
 	var bindKeyEvent = function(){
 		document.onkeydown = function(e){
@@ -23,8 +27,15 @@ var Local = function(){
 	}
 	//移动
 	var move = function(){
+		timeFunc();
 		if(!game.down()){
 			game.fixed();
+			var line = game.checkClear();
+			if(line){
+				alert("2");
+				alert(line);
+				game.addScore(line);
+			}
 			game.checkClear();
 			var gameOver = game.checkGameOver();
 			if(gameOver){
@@ -32,6 +43,15 @@ var Local = function(){
 			}else{
 				game.performNext(generateType(),generateDir());
 			}
+		}
+	}
+	//即使函数
+	var timeFunc = function(){
+		timeCount = timeCount + 1;
+		if(timeCount == 5){
+			timeCount = 0;
+			time = time + 1;
+			game.setTime(time);
 		}
 	}
 	//随机生成一个方块
@@ -46,11 +66,14 @@ var Local = function(){
 	var start = function(){
 		var doms = {
 			gameDiv: document.getElementById('game'),
-			nextDiv: document.getElementById('next')
+			nextDiv: document.getElementById('next'),
+			timeDiv: document.getElementById('time'),
+			scoreDiv:document.getElementById('score')
 		}
 		game = new Game();
-		game.init(doms);
+		game.init(doms, generateType(),generateDir());
 		bindKeyEvent();
+		game.performNext(generateType(),generateDir());
 		timer = setInterval(move,INTERVAL);
 	}
 	//结束
